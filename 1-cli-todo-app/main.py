@@ -1,24 +1,29 @@
-todos: list = []
+todos = []
 
 
 while True:
-    user_action: str = input('Type "add", "show" or "exit": ')
+    user_action = input('Type "add", "show", "edit" or "exit": ')
     user_action = user_action.lower().strip()
 
     match user_action:
-        case 'add' | 'create':
-            todo: str = input("Enter a todo: ")
-            todos.append(todo)
-        case 'show' | 'display':
-            if len(todos) >= 1:
-                print('Todos now:')
+        case 'add':
+            todo = input('Enter a todo: ')
+            todos.append(todo.capitalize())
 
-                for todo in enumerate(todos, start=1):
-                    print(f"{todo[0]}: {todo[1].capitalize()}.")
+        case 'show':
+            if len(todos) >= 1:
+                print(*[f"{todo[0]}: {todo[1]}" for todo in enumerate(todos, start=1)], sep='\n')
             else:
                 print('Nothing to show.')
-        case 'exit' | 'quit':
+
+        case 'edit':
+            todo_index = int(input('Number of the todo to edit: ')) - 1
+            new_todo = input('Enter new todo: ')
+            todos[todo_index] = new_todo
+
+        case 'exit':
             break
+
         case _:
             print('Hey, you entered an unknown command.')
 
