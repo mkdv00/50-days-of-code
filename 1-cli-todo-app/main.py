@@ -12,7 +12,7 @@ while True:
 
         case 'show':
             if len(todos) >= 1:
-                print(*[f"{todo[0]}: {todo[1]}" for todo in enumerate(todos, start=1)], sep='\n')
+                print(*[f"{index}: {todo}" for index, todo in enumerate(todos, start=1)], sep='\n')
             else:
                 print('Nothing to show.')
 
