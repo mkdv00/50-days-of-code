@@ -25,7 +25,10 @@ while True:
             file.close()
 
             if len(todos) >= 1:
-                print(*[f"{index}: {todo}" for index, todo in enumerate(todos, start=1)], sep='\n')
+                for index, todo_item in enumerate(todos, start=1):
+                    todo_item = todo_item.strip('\n')
+                    template = f"{index}: {todo_item}."
+                    print(template)
             else:
                 print('Nothing to show.')
 
