@@ -1,3 +1,5 @@
+from utils import files
+
 todos_file = 'files/todos.txt'
 
 
@@ -9,20 +11,13 @@ while True:
         case 'add':
             todo = input('Enter a todo: ') + '\n'
 
-            file = open(todos_file, 'r')
-            todos = file.readlines()
-            file.close()
-
+            todos = files.read_todo(todos_file)
             todos.append(todo.capitalize())
 
-            file = open(todos_file, 'w')
-            file.writelines(todos)
-            file.close()
+            files.write_todo(todos_file, todos)
 
         case 'show':
-            file = open(todos_file, 'r')
-            todos = file.readlines()
-            file.close()
+            todos = files.read_todo(todos_file)
 
             if len(todos) >= 1:
                 for index, todo_item in enumerate(todos, start=1):
