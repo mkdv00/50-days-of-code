@@ -1,12 +1,10 @@
 def read_todo(filename):
-    file = open(filename, 'r')
-    todos = file.readlines()
-    file.close()
+    with open(filename, 'r') as file:
+        todos = file.readlines()
 
     return todos
 
 
 def write_todo(filename, content):
-    file = open(filename, 'w')
-    file.writelines(content)
-    file.close()
+    with open(filename, 'w') as file:
+        file.writelines(content)
