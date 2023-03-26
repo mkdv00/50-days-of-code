@@ -6,12 +6,12 @@ class Todo:
     def __init__(self, filename):
         self.filename = filename
 
-    def add_todo(self):
+    def add_todo(self, user_action):
         """Add todos item in file"""
-        todo = input('Enter a todo: ') + '\n'
+        todo = user_action.replace('add', '') + '\n'
 
         todos = files.read_todo(self.filename)
-        todos.append(todo.capitalize())
+        todos.append(todo.lstrip().capitalize())
 
         files.write_todo(self.filename, todos)
 
@@ -27,27 +27,33 @@ class Todo:
         else:
             print('Nothing to show.')
 
-    def edit_todo(self):
+    def edit_todo(self, user_action):
         """Overwrite the todos file"""
-        todo_index = int(input('Number of the todo to edit: ')) - 1
+        todo_to_edit = user_action.replace('edit', '')
+        todo_index = int(todo_to_edit.lstrip()) - 1
 
         todos = files.read_todo(self.filename)
 
+        old_todo = todos[todo_index].strip('\n')
         new_todo = input('Enter new todo: ')
+
+        print(f"Todo before edit: {old_todo}")
+        print(f"Todo after edit: {new_todo}")
+
         todos[todo_index] = new_todo + '\n'
 
         files.write_todo(self.filename, todos)
 
-    def complete_todo(self):
+    def complete_todo(self, user_action):
         """Complete todos item"""
-        user_todo = int(input('Number of the todo to complete: '))
+        todo_to_complete = user_action.replace('complete', '')
+        todo_index = int(todo_to_complete.lstrip()) - 1
 
         todos = files.read_todo(self.filename)
 
-        todo_index = user_todo - 1
         todo_to_remove = todos[todo_index].strip('\n')
         todos.pop(todo_index)
 
         files.write_todo(self.filename, todos)
 
-        print(f"Todo {todo_to_remove} was removed from the list.")
+        print(f"Todo '{todo_to_remove}' was removed from the list.")

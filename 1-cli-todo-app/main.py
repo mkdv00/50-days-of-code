@@ -1,22 +1,26 @@
 from todo import todo
 
 
-while True:
-    user_action = input('Type "add", "show", "edit", "complete" or "exit": ')
-    user_action = user_action.lower().strip()
+def main():
+    while True:
+        user_action = input('Type "add", "show", "edit", "complete" or "exit": ')
+        user_action = user_action.lower()
 
-    match user_action:
-        case 'add':
-            todo.add_todo()
-        case 'show':
+        if 'add' in user_action:
+            todo.add_todo(user_action=user_action)
+        elif 'show' in user_action:
             todo.show_todos()
-        case 'edit':
-            todo.edit_todo()
-        case 'complete':
-            todo.complete_todo()
-        case 'exit':
+        elif 'edit' in user_action:
+            todo.edit_todo(user_action=user_action)
+        elif 'complete' in user_action:
+            todo.complete_todo(user_action=user_action)
+        elif 'exit' in user_action:
             break
-        case _:
+        else:
             print('Hey, you entered an unknown command.')
 
-print('Bye!')
+    print('Bye!')
+
+
+if __name__ == '__main__':
+    main()
