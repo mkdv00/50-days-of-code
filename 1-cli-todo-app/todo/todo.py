@@ -29,31 +29,39 @@ class Todo:
 
     def edit_todo(self, user_action):
         """Overwrite the todos file"""
-        todo_to_edit = user_action.replace('edit', '')
-        todo_index = int(todo_to_edit.lstrip()) - 1
+        try:
+            todo_to_edit = user_action.replace('edit', '')
+            todo_index = int(todo_to_edit.lstrip()) - 1
 
-        todos = files.read_todo(self.filename)
+            todos = files.read_todo(self.filename)
 
-        old_todo = todos[todo_index].strip('\n')
-        new_todo = input('Enter new todo: ')
+            old_todo = todos[todo_index].strip('\n')
+            new_todo = input('Enter new todo: ')
 
-        print(f"Todo before edit: {old_todo}")
-        print(f"Todo after edit: {new_todo}")
+            print(f"Todo before edit: {old_todo}")
+            print(f"Todo after edit: {new_todo}")
 
-        todos[todo_index] = new_todo + '\n'
+            todos[todo_index] = new_todo + '\n'
 
-        files.write_todo(self.filename, todos)
+            files.write_todo(self.filename, todos)
+        except ValueError:
+            print('Your command is not valid.')
+        except IndexError:
+            print(f"Your todo does not exists.")
 
     def complete_todo(self, user_action):
         """Complete todos item"""
-        todo_to_complete = user_action.replace('complete', '')
-        todo_index = int(todo_to_complete.lstrip()) - 1
+        try:
+            todo_to_complete = user_action.replace('complete', '')
+            todo_index = int(todo_to_complete.lstrip()) - 1
 
-        todos = files.read_todo(self.filename)
+            todos = files.read_todo(self.filename)
 
-        todo_to_remove = todos[todo_index].strip('\n')
-        todos.pop(todo_index)
+            todo_to_remove = todos[todo_index].strip('\n')
+            todos.pop(todo_index)
 
-        files.write_todo(self.filename, todos)
+            files.write_todo(self.filename, todos)
 
-        print(f"Todo '{todo_to_remove}' was removed from the list.")
+            print(f"Todo '{todo_to_remove}' was removed from the list.")
+        except IndexError:
+            print(f"Your todo does not exists.")

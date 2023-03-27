@@ -6,15 +6,15 @@ def main():
         user_action = input('Type "add", "show", "edit", "complete" or "exit": ')
         user_action = user_action.lower()
 
-        if 'add' in user_action:
+        if user_action.startswith('add'):
             todo.add_todo(user_action=user_action)
-        elif 'show' in user_action:
+        elif user_action.startswith('show'):
             todo.show_todos()
-        elif 'edit' in user_action:
+        elif user_action.startswith('edit'):
             todo.edit_todo(user_action=user_action)
-        elif 'complete' in user_action:
+        elif user_action.startswith('complete'):
             todo.complete_todo(user_action=user_action)
-        elif 'exit' in user_action:
+        elif user_action.startswith('exit'):
             break
         else:
             print('Hey, you entered an unknown command.')
