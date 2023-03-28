@@ -1,7 +1,11 @@
 from todo import todo
+from utils.time import get_current_date_and_time
 
 
 def main():
+    now = get_current_date_and_time()
+    print(f"It's {now}")
+
     while True:
         user_action = input('Type "add", "show", "edit", "complete" or "exit": ')
         user_action = user_action.lower()
