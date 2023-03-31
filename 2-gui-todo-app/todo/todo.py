@@ -6,48 +6,28 @@ class Todo:
     def __init__(self, filename):
         self.filename = filename
 
-    def add_todo(self, user_action):
+    def add_todo(self, todo_item):
         """Add todos item in file"""
-        todo = user_action.replace('add', '') + '\n'
-
         todos = files.read_todo(self.filename)
-        todos.append(todo.lstrip().capitalize())
+        todos.append(todo_item.lstrip().capitalize())
 
         files.write_todo(self.filename, todos)
+        return todos
 
-    def show_todos(self):
-        """Show all todos from the file"""
+    def get_todos(self):
+        """Get all todos from the file and improve it for printing"""
         todos = files.read_todo(self.filename)
+        return todos
 
-        if len(todos) >= 1:
-            for index, todo_item in enumerate(todos, start=1):
-                todo_item = todo_item.strip('\n')
-                template = f"{index}: {todo_item}."
-                print(template)
-        else:
-            print('Nothing to show.')
-
-    def edit_todo(self, user_action):
+    def edit_todo(self, todo_to_edit, new_todo):
         """Overwrite the todos file"""
-        try:
-            todo_to_edit = user_action.replace('edit', '')
-            todo_index = int(todo_to_edit.lstrip()) - 1
+        todos = files.read_todo(self.filename)
+        index = todos.index(todo_to_edit)
 
-            todos = files.read_todo(self.filename)
+        todos[index] = new_todo + '\n'
 
-            old_todo = todos[todo_index].strip('\n')
-            new_todo = input('Enter new todo: ')
-
-            print(f"Todo before edit: {old_todo}")
-            print(f"Todo after edit: {new_todo}")
-
-            todos[todo_index] = new_todo + '\n'
-
-            files.write_todo(self.filename, todos)
-        except ValueError:
-            print('Your command is not valid.')
-        except IndexError:
-            print(f"Your todo does not exists.")
+        files.write_todo(self.filename, todos)
+        return todos
 
     def complete_todo(self, user_action):
         """Complete todos item"""
