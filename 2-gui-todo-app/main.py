@@ -1,4 +1,5 @@
 from todo import todo
+from utils import files
 from utils.time import get_current_date_and_time
 import PySimpleGUI as sg
 from gui import app
@@ -14,6 +15,7 @@ def main():
             case 'Add':
                 todos = todo.add_todo(event_value=values)
                 app.window['todos'].update(values=todos)
+                app.window['todo'].update(value='')
 
             case 'Edit':
                 todos = todo.edit_todo(event_value=values)
@@ -23,6 +25,11 @@ def main():
                 todos = todo.complete_todo(event_value=values)
                 app.window['todos'].update(values=todos)
                 app.window['todo'].update(value='')
+
+            case 'todos':
+                todos_list = values['todos']
+                if todos_list:
+                    app.window['todo'].update(value=todos_list[0])
 
             case 'Exit':
                 break
