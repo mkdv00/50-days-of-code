@@ -1,30 +1,37 @@
 from todo import todo
 from utils.time import get_current_date_and_time
+import PySimpleGUI as sg
+from gui import app
 
 
 def main():
-    now = get_current_date_and_time()
-    print(f"It's {now}")
-
     while True:
-        user_action = input('Type "add", "show", "edit", "complete" or "exit": ')
-        user_action = user_action.lower()
+        event, values = app.window.read(timeout=10)
+        app.window['clock'].update(value=get_current_date_and_time())
 
-        if user_action.startswith('add'):
-            todo.add_todo(user_action=user_action)
-        elif user_action.startswith('show'):
-            todo.show_todos()
-        elif user_action.startswith('edit'):
-            todo.edit_todo(user_action=user_action)
-        elif user_action.startswith('complete'):
-            todo.complete_todo(user_action=user_action)
-        elif user_action.startswith('exit'):
-            break
-        else:
-            print('Hey, you entered an unknown command.')
+        match event:
 
-    print('Bye!')
+            case 'Add':
+                todos = todo.add_todo(event_value=values)
+                app.window['todos'].update(values=todos)
+
+            case 'Edit':
+                todos = todo.edit_todo(event_value=values)
+                app.window['todos'].update(values=todos)
+
+            case 'Complete':
+                todos = todo.complete_todo(event_value=values)
+                app.window['todos'].update(values=todos)
+                app.window['todo'].update(value='')
+
+            case 'Exit':
+                break
+
+            case sg.WIN_CLOSED:
+                break
+
+    app.window.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
