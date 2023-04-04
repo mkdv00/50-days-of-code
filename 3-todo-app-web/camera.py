@@ -5,23 +5,22 @@ from PIL import Image, ImageFilter
 def apply_filter(option, photo):
     img = Image.open(photo)
 
-    match option:
-        case 'Blur':
-            img = img.filter(ImageFilter.BLUR)
-        case 'Contour':
-            img = img.filter(ImageFilter.CONTOUR)
-        case 'Detail':
-            img = img.filter(ImageFilter.DETAIL)
-        case 'Edge Enhance':
-            img = img.filter(ImageFilter.EDGE_ENHANCE)
-        case 'Emboss':
-            img = img.filter(ImageFilter.EMBOSS)
-        case 'Find Edges':
-            img = img.filter(ImageFilter.FIND_EDGES)
-        case 'Sharpen':
-            img = img.filter(ImageFilter.SHARPEN)
-        case 'Gray':
-            img = img.convert('L')
+    if option == 'Blur':
+        img = img.filter(ImageFilter.BLUR)
+    elif option == 'Contour':
+        img = img.filter(ImageFilter.CONTOUR)
+    elif option == 'Detail':
+        img = img.filter(ImageFilter.DETAIL)
+    elif option == 'Edge Enhance':
+        img = img.filter(ImageFilter.EDGE_ENHANCE)
+    elif option == 'Emboss':
+        img = img.filter(ImageFilter.EMBOSS)
+    elif option == 'Find Edges':
+        img = img.filter(ImageFilter.FIND_EDGES)
+    elif option == 'Sharpen':
+        img = img.filter(ImageFilter.SHARPEN)
+    elif option == 'Gray':
+        img = img.convert('L')
 
     return img
 
