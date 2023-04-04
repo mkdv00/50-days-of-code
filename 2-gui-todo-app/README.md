@@ -10,22 +10,6 @@
 
 ## Application functionality:
 
-#### adding todo:
+#### Demonstration:
 
-![This is an image](images/screenshots/add.png)
-
-#### show todo:
-
-![This is an image](images/screenshots/show.png)
-
-#### editing todo:
-
-![This is an image](images/screenshots/edit.png)
-
-#### completion of todo:
-
-![This is an image](images/screenshots/complete.png)
-
-#### exiting the application:
-
-![This is an image](images/screenshots/exit.png)
+![This is an image](images/screenshots/demo.gif)
