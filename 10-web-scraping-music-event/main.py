@@ -4,15 +4,18 @@ import smtplib
 import ssl
 import os
 from dotenv import load_dotenv
+import sqlite3
+import time
 
 load_dotenv()
-
 
 endpoint = 'http://programmer100.pythonanywhere.com/tours/'
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) '
                   'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
 }
+
+connection = sqlite3.connect('data.db')
 
 
 def scrape(url):
@@ -45,24 +48,32 @@ def send_email(message):
     print("Email was sent!")
 
 
-def store(extracted_data):
-    with open('data.txt', 'a') as file:
-        file.write(extracted_data + '\n')
+def get_data():
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM events")
+    result = cursor.fetchall()
+
+    return result
 
 
-def read():
-    with open('data.txt', 'r') as file:
-        return file.read()
+def store_data(extracted_data):
+    row_data = extracted_data.split(', ')
+    row_data = [item.strip() for item in row_data]
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO events VALUES(?,?,?)", row_data)
+    connection.commit()
 
 
 if __name__ == '__main__':
-    scraped = scrape(endpoint)
+    scraped: str = scrape(endpoint)
     extracted = extract(scraped)
     print(extracted)
 
-    content = read()
+    content = get_data()
 
-    if extracted != "No upcoming tours":
-        if extracted not in content:
-            store(extracted)
-            send_email(message="Hey, new event was found!")
+    if extracted[0] != "No upcoming tours":
+        for row in content:
+            if extracted not in row:
+                store_data(extracted)
+                send_email(message="Hey, new event was found!")
+                connection.close()
