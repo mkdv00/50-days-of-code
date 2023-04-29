@@ -50,7 +50,7 @@ def store(extracted_data):
         file.write(extracted_data + '\n')
 
 
-def read(extracted_data):
+def read():
     with open('data.txt', 'r') as file:
         return file.read()
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     extracted = extract(scraped)
     print(extracted)
 
-    content = read(extracted)
+    content = read()
 
     if extracted != "No upcoming tours":
         if extracted not in content:
