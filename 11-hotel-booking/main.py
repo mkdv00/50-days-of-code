@@ -2,14 +2,15 @@ from user import User
 from hotel import Hotel
 from ticket import ReservationTicket
 from secure_credit import SecureCreditCard
+import database
 
-import pandas as pd
+print('All hotels:')
+result = database.get_data_from_db(table_name='hotel')
+for row in result:
+    print(row)
 
-df = pd.read_csv('hotels.csv', dtype={"id": str})
-
-print(df)
 user_hotel_id = input('Enter the id of the hotel: ')
-hotel = Hotel(hotel_id=user_hotel_id, dataframe=df)
+hotel = Hotel(hotel_id=user_hotel_id)
 
 if hotel.available():
     card_number = input("Enter credit card number: ")
